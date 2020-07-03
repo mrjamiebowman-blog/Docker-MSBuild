@@ -27,5 +27,3 @@ WORKDIR /source
 
 # cmd
 CMD powershell /scripts/release.ps1
-
-#ENTRYPOINT ["powershell"]
