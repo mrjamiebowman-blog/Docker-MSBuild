@@ -1,3 +1,9 @@
 
 docker rm -f msbuild
-docker run -it --name msbuild mrjamiebowman/msbuild powershell
+
+#git clone https://github.com/NuGet/NuGet.Server.git source
+
+docker run --rm -it -v ${PWD}\source:C:\source -v ${PWD}\published:C:\published --name msbuild mrjamiebowman/msbuild
+
+
+

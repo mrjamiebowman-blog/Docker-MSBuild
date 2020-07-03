@@ -10,19 +10,22 @@ RUN choco install vim -y
 
 # set up dirs
 RUN New-Item -Path C:\source -ItemType Directory -Force
+RUN New-Item -Path C:\publishprofiles -ItemType Directory -Force
 RUN New-Item -Path C:\published -ItemType Directory -Force
-WORKDIR /source
 
-# clone and run msbuild
-RUN git clone https://github.com/NuGet/NuGet.Server.git .
-RUN nuget restore
+# working directory
+WORKDIR /scripts
+
+# set up publish profile
+COPY scripts/FolderProfile.pubxml /publishprofiles/FolderProfile.pubxml
 
 # wrapping the msbuild command in a powershell scripts returns 0 and does not fail...
 COPY scripts/msbuild.ps1 .
-RUN ./msbuild.ps1
-COPY scripts/FolderProfile.pubxml /source/src/NuGet.Server/Properties/PublishProfiles/FolderProfile.pubxml
 COPY scripts/release.ps1 .
-RUN ./release.ps1
 
-ENTRYPOINT ["powershell"]
+WORKDIR /source
 
+# cmd
+CMD powershell /scripts/release.ps1
+
+#ENTRYPOINT ["powershell"]
