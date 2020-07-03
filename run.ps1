@@ -1,3 +1,3 @@
 
 docker rm -f msbuild
-docker run -it --name msbuild mrjb/msbuild powershell
+docker run -it --name msbuild mrjamiebowman/msbuild powershell
